@@ -1,13 +1,16 @@
-import {compose, pipe} from 'lodash/fp'
+import {produce} from 'immer'
 
+let book = {title: "Harry Potter"}
 
-let input = "  JavaScript   "
-let output = "<div>" + input.trim() + "</div>"
+function publish(book) { 
+    return produce(book, draftBook => {
+        draftBook.isPublished = true
+    })
+}
 
-const trim = str => str.trim()
-const wrap = type => str => `<${type}>${str}</${type}>`
-const toLowerCase = str => str.toLowerCase()
+const newbook = publish(book)
 
-const transform = pipe(trim, toLowerCase, wrap("div"))
+console.log(book)
 
-console.log(transform(input))
+console.log(newbook)
+
